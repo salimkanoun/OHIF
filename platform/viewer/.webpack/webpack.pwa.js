@@ -141,16 +141,6 @@ module.exports = (env, argv) => {
       },
       'static': [
         {
-          directory: path.join(require('os').homedir(), 'dicomweb'),
-          staticOptions: {
-            extensions: ['gz', 'br'],
-            index: "index.json.gz",
-            redirect: true,
-            setHeaders,
-          },
-          publicPath: '/dicomweb',
-        },
-        {
           directory: '../../testdata',
           staticOptions: {
             extensions: ['gz', 'br'],

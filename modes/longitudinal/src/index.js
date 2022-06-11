@@ -29,6 +29,11 @@ const dicomvideo = {
   viewport: '@ohif/extension-dicom-video.viewportModule.dicom-video',
 };
 
+const ecgdicom = {
+  sopClassHandler: '@radical/ecg-dicom.sopClassHandlerModule.ecg-dicom',
+  viewport: '@radical/ecg-dicom.viewportModule.ecg-dicom',
+};
+
 const dicompdf = {
   sopClassHandler: '@ohif/extension-dicom-pdf.sopClassHandlerModule.dicom-pdf',
   viewport: '@ohif/extension-dicom-pdf.viewportModule.dicom-pdf',
@@ -42,6 +47,7 @@ const extensionDependencies = {
   '@ohif/extension-cornerstone-dicom-sr': '^3.0.0',
   '@ohif/extension-dicom-pdf': '^3.0.1',
   '@ohif/extension-dicom-video': '^3.0.1',
+  '@radical/ecg-dicom': '^3.0.0',
 };
 
 function modeFactory({ modeConfiguration }) {
@@ -122,8 +128,8 @@ function modeFactory({ modeConfiguration }) {
     isValidMode: ({ modalities }) => {
       const modalities_list = modalities.split('\\');
 
-      // Slide Microscopy modality not supported by basic mode yet
-      return !modalities_list.includes('SM');
+      // Slide Microscopy and ECG modality not supported by basic mode yet
+      return !modalities_list.includes('SM') && !modalities_list.includes('ECG');
     },
     routes: [
       {
@@ -155,6 +161,10 @@ function modeFactory({ modeConfiguration }) {
                   namespace: dicompdf.viewport,
                   displaySetsToDisplay: [dicompdf.sopClassHandler],
                 },
+                {
+                  namespace: ecgdicom.viewport,
+                  displaySetsToDisplay: [ecgdicom.sopClassHandler],
+                },
               ],
             },
           };
@@ -168,6 +178,7 @@ function modeFactory({ modeConfiguration }) {
     // general handler needs to come last.  For this case, the dicomvideo must
     // come first to remove video transfer syntax before ohif uses images
     sopClassHandlers: [
+      ecgdicom.sopClassHandler,
       dicomvideo.sopClassHandler,
       ohif.sopClassHandler,
       dicompdf.sopClassHandler,

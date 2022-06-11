@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-props-no-spreading */
+  /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { MODULE_TYPES } from '@ohif/core';
