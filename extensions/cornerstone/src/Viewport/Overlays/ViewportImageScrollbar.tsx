@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Enums, Types, utilities } from '@cornerstonejs/core';
+import { Enums, VolumeViewport3D } from '@cornerstonejs/core';
 import { utilities as csToolsUtils } from '@cornerstonejs/tools';
 import { ImageScrollbar } from '@ohif/ui';
 
@@ -39,11 +39,12 @@ function CornerstoneImageScrollbar({
 
     const viewport = cornerstoneViewportService.getCornerstoneViewport(viewportId);
 
-    if (!viewport) {
+    if (!viewport || viewport instanceof VolumeViewport3D) {
       return;
     }
 
     const imageIndex = viewport.getCurrentImageIdIndex();
+    if(!viewport || viewport instanceof VolumeViewport3D) return
     const numberOfSlices = viewport.getNumberOfSlices();
 
     setImageSliceData({
